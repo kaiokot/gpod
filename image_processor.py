@@ -20,7 +20,7 @@ class AzureComputerVision():
 
         max_descriptions = 3
 
-        analysis = computervision_client.describe_image(
+        analysis = computervision_client.describe_image_in_stream(
             image_url, max_descriptions, "en")
 
         return {
