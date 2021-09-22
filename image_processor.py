@@ -13,7 +13,7 @@ class AzureComputerVision():
     def describe(self, image_url):
 
         if image_url is None:
-            raise ValueError
+            raise ValueError("image_url")
 
         computervision_client = ComputerVisionClient(
             self.endpoint, CognitiveServicesCredentials(self.subscription_key))
