@@ -1,0 +1,1 @@
+sudo apt-get -qy install fswebcam
