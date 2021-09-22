@@ -1,4 +1,10 @@
 {
+    "time": {
+        "zone": "America/Sao_Paulo",
+        "interval_seconds": 600,
+        "start": 7,
+        "end": 10
+    },
     "preview": {
         "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview",
         "git_path": "git@github.com:kaiokot/gpod-preview.git"

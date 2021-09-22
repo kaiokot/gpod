@@ -7,6 +7,8 @@ import os
 import json
 import sys
 import shutil
+from datetime import datetime
+import pytz
 
 
 subscription_key = "subscription_key"
@@ -27,39 +29,47 @@ if __name__ == "__main__":
         prev = Preview(config["preview"])
 
         while True:
-            print("starting to process image...")
+            current_dt = datetime.now(pytz.timezone(config["time"]["zone"]))
+            hour = current_dt.hour
 
-            cam.take()
-            print("success on take pic!")
+            if (config["time"]["start"] <= hour <= config["time"]["end"]):
+                print("starting to process image...")
 
-            list_of_files = glob.glob('images/*.jpeg')
-            latest_file = max(list_of_files, key=os.path.getctime)
-            print("success on get last pic!")
+                cam.take()
+                print("success on take pic!")
 
-            filepath = open(latest_file, 'rb')
-            azure_cv = AzureComputerVision(subscription_key, endpoint)
-            result = azure_cv.describe(filepath)
-            print("success on describe pic!")
+                list_of_files = glob.glob('images/*.jpeg')
+                latest_file = max(list_of_files, key=os.path.getctime)
+                print("success on get last pic!")
 
-            with open(latest_file + ".json", 'w') as outfile:
-                json.dump(result, outfile)
-            print("success on save description json  to pic!")
+                filepath = open(latest_file, 'rb')
+                azure_cv = AzureComputerVision(subscription_key, endpoint)
+                result = azure_cv.describe(filepath)
+                print("success on describe pic!")
 
-            # send preview
-            prev.check_directory()
-            dest_path = config["preview"]["git_dir"]
-            dest_pic = dest_path + "/photo.jpeg"
-            dest_json = dest_path + "/description.json"
+                with open(latest_file + ".json", 'w') as outfile:
+                    json.dump(result, outfile)
+                print("success on save description json  to pic!")
 
-            shutil.copyfile(latest_file, dest_pic)
-            shutil.copyfile(latest_file + ".json", dest_json)
-            print("success on copy files to git dir!")
+                # send preview
+                prev.check_directory()
+                dest_path = config["preview"]["git_dir"]
+                dest_pic = dest_path + "/photo.jpeg"
+                dest_json = dest_path + "/description.json"
 
-            prev.publish()
-            print("success on publish to github!")
+                shutil.copyfile(latest_file, dest_pic)
+                shutil.copyfile(latest_file + ".json", dest_json)
+                print("success on copy files to git dir!")
 
-            print("everything is alright! \n")
+                prev.publish()
+                print("success on publish to github!")
 
-            time.sleep(60)
+                print("everything is alright! \n")
+            else:
+                print("out of time range")
+
+            time.sleep(config["time"]["interval_seconds"])
+           
+
     except Exception as ex:
         print(ex)
