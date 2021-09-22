@@ -10,3 +10,4 @@ class UsbCam():
 
     def take(self):
         os.system("fswebcam -c configs/fswebcam.conf")
+        time.sleep(2)
