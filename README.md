@@ -12,14 +12,14 @@ Update 1:
 -   :camera_flash: Take pic with 1min interval.
 -   :computer: Use Azure Cognitive Services to describe image saved.
 -   :file_folder: Save local file image + json with descriptions.
--   :cloud: Publish preview image + json to a github page : [gpod preview](https://kaiokot.github.io/gpod-preview){:target="_blank"}
+-   :cloud: Publish preview image + json to a github page : [gpod preview](https://kaiokot.github.io/gpod-preview)
 
 
 
 ## References
 
-[fswebcam](http://manpages.ubuntu.com/manpages/bionic/man1/fswebcam.1.html){:target="_blank"}
+[fswebcam](http://manpages.ubuntu.com/manpages/bionic/man1/fswebcam.1.html)
 
-[Azure Cognitive Services](https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-describing-images){:target="_blank"}
+[Azure Cognitive Services](https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-describing-images)
 
-[Github Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site){:target="_blank"}
+[Github Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)
