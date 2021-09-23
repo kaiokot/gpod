@@ -21,6 +21,10 @@ Update 1:
 
 Update 2:
 -   :camera_flash: Add support to ip cams using Rtsp.
+-   :camera_flash: 📸 Add multi camera and config support.
+-   :cloud:  Add preview from multicamera.
+
+
 
 ## References
 
