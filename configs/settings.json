@@ -18,7 +18,7 @@
         {
             "id": "milho",
             "type": "rtsp",
-            "input_address": "rtsp://admin:PASSWORD@192.168.0.29:554/onvif1",
+            "input_address": "rtsp://admin:PASSWOOOOORD@192.168.0.29:554/onvif1",
             "time": {
                 "zone": "America/Sao_Paulo",
                 "interval_seconds": 600,

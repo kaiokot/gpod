@@ -11,6 +11,9 @@ import shutil
 from datetime import datetime
 import pytz
 from threading import Thread
+
+
+
 subscription_key = "subscription_key"
 endpoint = "endpoint"
 
