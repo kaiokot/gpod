@@ -20,15 +20,15 @@ endpoint = "endpoint"
 
 
 class CameraWorker(Thread):
-    def __init__(self, settings, queue):
+    def __init__(self, settings, queue, devices):
         Thread.__init__(self)
         self.settings = settings
         self.queue = queue
+        self.devices = devices
 
     def run(self):
         try:
             while True:
-                prev = Preview(self.settings["preview"])
                 cam = None
                 print("working on {} ......".format(self.settings["id"]))
                 type = self.settings["type"]
@@ -68,9 +68,11 @@ class CameraWorker(Thread):
 
                     with open(latest_file + ".json", 'w') as outfile:
                         json.dump(result, outfile)
+
                     print("success on save description json  to pic!")
 
                     # send preview
+                    prev = Preview(self.settings["preview"])
                     prev.check_directory()
 
                     dest_path = self.settings["preview"]["git_dir"] + \
@@ -82,6 +84,9 @@ class CameraWorker(Thread):
 
                     if not isdir(dest_path):
                         os.makedirs(dest_path)
+
+                    with open(self.settings["preview"]["git_dir"] + "/devices.json", 'w') as outfile:
+                        json.dump(self.devices, outfile)
 
                     shutil.copyfile(latest_file, dest_pic)
                     shutil.copyfile(latest_file + ".json", dest_json)
@@ -112,8 +117,10 @@ def main():
             sys.exit(1)
         queue = Queue()
 
+        devices = [item.get("id")for item in settings["cameras"]]
+
         for setting in settings["cameras"]:
-            worker = CameraWorker(setting, queue)
+            worker = CameraWorker(setting, queue, devices)
             # worker.daemon = True
             worker.start()
 
