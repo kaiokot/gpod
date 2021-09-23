@@ -46,7 +46,7 @@ class CameraWorker(Thread):
                 if (setting_time_start <= hour <= setting_time_end):
 
                     if(type == "usb"):
-                        cam = UsbCam()
+                        cam = UsbCam(input_address)
                     elif(type == "rtsp"):
                         cam = RtspCam(input_address)
                     else:
@@ -94,7 +94,7 @@ class CameraWorker(Thread):
 
                     print("success on copy files to git dir!")
 
-                    prev.publish()
+                    # prev.publish()
                     print("success on publish to github!")
 
                     print("everything is alright! \n")
