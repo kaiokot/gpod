@@ -14,6 +14,7 @@ class UsbCam():
         time.sleep(2)
 
 
+# https://ffmpeg.org/
 class RtspCam():
     def __init__(self, ip_cam):
         self.ip_cam = ip_cam
