@@ -12,13 +12,14 @@
             },
             "preview": {
                 "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview",
+                "git_sub_dir": "/devices/horta",
                 "git_path": "git@github.com:kaiokot/gpod-preview.git"
             }
         },
         {
             "id": "milho",
             "type": "rtsp",
-            "input_address": "rtsp://admin:PASSWOOOOORD@192.168.0.29:554/onvif1",
+            "input_address": "rtsp://USER:PASSWORD@192.168.0.29:554/onvif1",
             "time": {
                 "zone": "America/Sao_Paulo",
                 "interval_seconds": 600,
@@ -27,6 +28,7 @@
             },
             "preview": {
                 "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview",
+                "git_sub_dir": "/devices/milho",
                 "git_path": "git@github.com:kaiokot/gpod-preview.git"
             }
         }

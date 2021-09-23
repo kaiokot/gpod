@@ -12,6 +12,7 @@ from datetime import datetime
 import pytz
 from threading import Thread
 
+from os.path import isdir
 
 
 subscription_key = "subscription_key"
@@ -33,7 +34,6 @@ class CameraWorker(Thread):
                 type = self.settings["type"]
                 input_address = self.settings["input_address"]
 
-                
                 print("using local camera time self.settings...")
                 setting_time_zone = self.settings["time"]["zone"]
                 setting_time_start = self.settings["time"]["start"]
@@ -70,23 +70,31 @@ class CameraWorker(Thread):
                         json.dump(result, outfile)
                     print("success on save description json  to pic!")
 
-                    # # send preview
-                    # prev.check_directory()
-                    # dest_path = self.settings["preview"]["git_dir"]
-                    # dest_pic = dest_path + "/photo.jpeg"
-                    # dest_json = dest_path + "/description.json"
+                    # send preview
+                    prev.check_directory()
 
-                    # shutil.copyfile(latest_file, dest_pic)
-                    # shutil.copyfile(latest_file + ".json", dest_json)
-                    # print("success on copy files to git dir!")
+                    dest_path = self.settings["preview"]["git_dir"] + \
+                        self.settings["preview"]["git_sub_dir"]
 
-                    # prev.publish()
-                    # print("success on publish to github!")
+                    dest_pic = dest_path + "/photo.jpeg"
+                    dest_json = dest_path + "/description.json"
+                    dest_index_html = dest_path + "/index.html"
+
+                    if not isdir(dest_path):
+                        os.makedirs(dest_path)
+
+                    shutil.copyfile(latest_file, dest_pic)
+                    shutil.copyfile(latest_file + ".json", dest_json)
+                    shutil.copyfile("index.html", dest_index_html)
+
+                    print("success on copy files to git dir!")
+
+                    prev.publish()
+                    print("success on publish to github!")
 
                     print("everything is alright! \n")
                 else:
                     print("out of time range")
-
 
                 time.sleep(setting_interval_secs)
         finally:
@@ -113,6 +121,7 @@ def main():
 
     except Exception as ex:
         print(ex)
-   
+
+
 if __name__ == "__main__":
     main()
