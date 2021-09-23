@@ -1,10 +1,14 @@
 # gpod - Growth Picture of the Day
 
-A camera module to monitor the growth of seeds and vegetable gardens in general.
+A project "inspired" on [growlab](https://github.com/alexellis/growlab) by [@alexellis](https://github.com/alexellis/)
 
-With the objective is to closely monitor the development of the plants and collect environment data.
+gpod is a camera module to monitor the growth of seeds and vegetable gardens in general.
 
-And create cool timelapses :laughing:
+With the objective is to closely monitor the development of the plants and collect environment data and share their evolutions.
+
+Using the Azure Cognitive Services to describe the pictures taken to make things more interesting...
+
+And then create some really cool time lapses  :laughing:
 
 First POC
 
@@ -15,6 +19,8 @@ Update 1:
 -   :cloud: Publish preview image + json to a github page : [gpod preview](https://kaiokot.github.io/gpod-preview)
 
 
+Update 2:
+-   :camera_flash: Add support to ip cams using Rtsp.
 
 ## References
 
@@ -23,3 +29,5 @@ Update 1:
 [Azure Cognitive Services](https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-describing-images)
 
 [Github Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)
+
+[ffmpeg](https://ffmpeg.org)
