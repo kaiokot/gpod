@@ -3,7 +3,7 @@
         {
             "id": "horta",
             "type": "usb",
-            "input_address": "",
+            "input_address": "/dev/video0",
             "time": {
                 "zone": "America/Sao_Paulo",
                 "interval_seconds": 60,

@@ -6,11 +6,11 @@ import uuid
 
 
 class UsbCam():
-    def __init__(self):
-        pass
+    def __init__(self, device):
+        self.device = device
 
     def take(self):
-        os.system("fswebcam -c configs/fswebcam.conf")
+        os.system("fswebcam -d {} -c configs/fswebcam.conf".format(self.device))
         time.sleep(2)
 
 
