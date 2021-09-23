@@ -94,7 +94,7 @@ class CameraWorker(Thread):
 
                     print("success on copy files to git dir!")
 
-                    # prev.publish()
+                    prev.publish()
                     print("success on publish to github!")
 
                     print("everything is alright! \n")
