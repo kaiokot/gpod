@@ -34,7 +34,7 @@ class CameraWorker(Thread):
                 type = self.settings["type"]
                 input_address = self.settings["input_address"]
 
-                print("using local camera time self.settings...")
+                print("using local camera time settings...")
                 setting_time_zone = self.settings["time"]["zone"]
                 setting_time_start = self.settings["time"]["start"]
                 setting_time_end = self.settings["time"]["end"]
