@@ -24,6 +24,8 @@
             <div class="col-md-12">
                 <img src="photo.jpeg" class="img-fluid" alt="..." />
 
+                <p id="dt"></p>
+
                 <p id="description"></p>
 
                 <ul id="tags" class="list-group">
@@ -39,14 +41,16 @@
     <script>
         fetch("description.json")
             .then(res => res.json())
-            .then(data => {
-                document.getElementById("description").innerHTML = data.captions[0][0];
+            .then(result => {
+                document.getElementById("description").innerHTML = result.desc.captions[0][0];
 
-                let new_li = data.tags.map(function (tag) {
+                let new_li = result.desc.tags.map(function (tag) {
                     return '<li lass=" list-group-item">' + tag + '</li>';
                 }).join('');
 
                 document.getElementById("tags").innerHTML = new_li;
+
+                document.getElementById("dt").innerHTML = result.dt;
             });
     </script>
 </body>

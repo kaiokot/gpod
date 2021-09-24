@@ -12,14 +12,14 @@ class UsbCam():
 
     def take(self):
         now = datetime.now(pytz.timezone(
-            self.cam_setting["time"]["zone"])).strftime('%Y%m%d-%H%M%S.%f')
+            self.cam_setting["time"]["zone"]))
 
-        file_path = "images/" + now + ".jpeg"
+        file_path = "images/" + now.strftime('%Y%m%d-%H%M%S.%f') + ".jpeg"
 
         os.system("fswebcam -d {} -c configs/fswebcam.conf --save {} ".format(
             self.cam_setting["input_address"], file_path))
 
-        return open(file_path, 'rb')
+        return open(file_path, 'rb'),  file_path, now
 
 
 # https://ffmpeg.org/
@@ -29,11 +29,11 @@ class RtspCam():
 
     def take(self):
         now = datetime.now(pytz.timezone(
-            self.cam_setting["time"]["zone"])).strftime('%Y%m%d-%H%M%S.%f')
+            self.cam_setting["time"]["zone"]))
 
-        file_path = "images/" + now + ".jpeg"
+        file_path = "images/" + now.strftime('%Y%m%d-%H%M%S.%f') + ".jpeg"
 
         os.system(
             "ffmpeg -y -i {} -f image2 -vframes 1 -pix_fmt yuvj420p -strftime 1 '{}' -loglevel error -stats ".format(self.cam_setting["input_address"], file_path))
 
-        return open(file_path, 'rb')
+        return open(file_path, 'rb'),  file_path, now

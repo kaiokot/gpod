@@ -55,8 +55,8 @@ class CameraWorker(Thread):
 
                     print("starting to process image...")
 
-                    pic_taken = cam.take()
-                    pic_file_name = pic_taken.name
+                    pic_taken, pic_file_name, date_pic = cam.take()
+
                     print(
                         self.settings["id"] + " - success on take pic! {}".format(pic_file_name))
 
@@ -66,7 +66,8 @@ class CameraWorker(Thread):
                           " - success on describe pic!")
 
                     with open(pic_file_name + ".json", 'w') as outfile:
-                        json.dump(result, outfile)
+                        json.dump(
+                            {"desc": result, "dt": str(date_pic)}, outfile)
 
                     print(
                         self.settings["id"] + " - success on save description json  to pic!")
@@ -95,7 +96,7 @@ class CameraWorker(Thread):
                     print(self.settings["id"] +
                           " - success on copy files to git dir!")
 
-                    prev.publish()
+                    # prev.publish()
                     print(self.settings["id"] +
                           " - success on publish to github!")
 
