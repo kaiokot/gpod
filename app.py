@@ -96,7 +96,7 @@ class CameraWorker(Thread):
                     print(self.settings["id"] +
                           " - success on copy files to git dir!")
 
-                    # prev.publish()
+                    prev.publish()
                     print(self.settings["id"] +
                           " - success on publish to github!")
 
