@@ -32,9 +32,9 @@ class CameraWorker(Thread):
                 cam = None
                 print("working on {} ......".format(self.settings["id"]))
                 type = self.settings["type"]
-                input_address = self.settings["input_address"]
 
                 print("using local camera time settings...")
+
                 setting_time_zone = self.settings["time"]["zone"]
                 setting_time_start = self.settings["time"]["start"]
                 setting_time_end = self.settings["time"]["end"]
@@ -46,30 +46,30 @@ class CameraWorker(Thread):
                 if (setting_time_start <= hour <= setting_time_end):
 
                     if(type == "usb"):
-                        cam = UsbCam(input_address)
+                        cam = UsbCam(self.settings)
                     elif(type == "rtsp"):
-                        cam = RtspCam(input_address)
+                        cam = RtspCam(self.settings)
                     else:
                         print("invalid cam type...")
+                        continue
 
                     print("starting to process image...")
 
-                    cam.take()
-                    print("success on take pic!")
+                    pic_taken = cam.take()
+                    pic_file_name = pic_taken.name
+                    print(
+                        self.settings["id"] + " - success on take pic! {}".format(pic_file_name))
 
-                    list_of_files = glob.glob('images/*.jpeg')
-                    latest_file = max(list_of_files, key=os.path.getctime)
-                    print("success on get last pic!")
-
-                    filepath = open(latest_file, 'rb')
                     azure_cv = AzureComputerVision(subscription_key, endpoint)
-                    result = azure_cv.describe(filepath)
-                    print("success on describe pic!")
+                    result = azure_cv.describe(pic_taken)
+                    print(self.settings["id"] +
+                          " - success on describe pic!")
 
-                    with open(latest_file + ".json", 'w') as outfile:
+                    with open(pic_file_name + ".json", 'w') as outfile:
                         json.dump(result, outfile)
 
-                    print("success on save description json  to pic!")
+                    print(
+                        self.settings["id"] + " - success on save description json  to pic!")
 
                     # send preview
                     prev = Preview(self.settings["preview"])
@@ -88,14 +88,16 @@ class CameraWorker(Thread):
                     with open(self.settings["preview"]["git_dir"] + "/devices.json", 'w') as outfile:
                         json.dump(self.devices, outfile)
 
-                    shutil.copyfile(latest_file, dest_pic)
-                    shutil.copyfile(latest_file + ".json", dest_json)
+                    shutil.copyfile(pic_file_name, dest_pic)
+                    shutil.copyfile(pic_file_name + ".json", dest_json)
                     shutil.copyfile("index.html", dest_index_html)
 
-                    print("success on copy files to git dir!")
+                    print(self.settings["id"] +
+                          " - success on copy files to git dir!")
 
                     prev.publish()
-                    print("success on publish to github!")
+                    print(self.settings["id"] +
+                          " - success on publish to github!")
 
                     print("everything is alright! \n")
                 else:
