@@ -1,39 +1,58 @@
-import time
 import os
-import uuid
 from datetime import datetime
 import pytz
+
 # http://manpages.ubuntu.com/manpages/bionic/man1/fswebcam.1.html
 
 
 class UsbCam():
-    def __init__(self, cam_setting):
-        self.cam_setting = cam_setting
+    def __init__(self, settings):
+        self.settings = settings
 
     def take(self):
-        now = datetime.now(pytz.timezone(
-            self.cam_setting["time"]["zone"]))
+        try:
+            print("starting to take pic...")
 
-        file_path = "images/" + now.strftime('%Y%m%d-%H%M%S.%f') + ".jpeg"
+            now = datetime.now(pytz.timezone(
+                self.settings["time"]["zone"]))
 
-        os.system("fswebcam -d {} -c configs/fswebcam.conf --save {} ".format(
-            self.cam_setting["input_address"], file_path))
+            file_path = "images/" + now.strftime('%Y%m%d-%H%M%S.%f') + ".jpeg"
 
-        return open(file_path, 'rb'),  file_path, now
+            os.system("fswebcam -d {} -c configs/fswebcam.conf --save {} ".format(
+                self.settings["input_address"], file_path))
 
+            print(
+                self.settings["id"] + " - success on take pic! {}".format(file_path))
+
+            return open(file_path, 'rb'),  file_path, now
+
+        except Exception as ex:
+            print(ex)
+            raise ex
 
 # https://ffmpeg.org/
+
+
 class RtspCam():
-    def __init__(self, cam_setting):
-        self.cam_setting = cam_setting
+    def __init__(self, settings):
+        self.settings = settings
 
     def take(self):
-        now = datetime.now(pytz.timezone(
-            self.cam_setting["time"]["zone"]))
+        try:
+            print("starting to take pic...")
 
-        file_path = "images/" + now.strftime('%Y%m%d-%H%M%S.%f') + ".jpeg"
+            now = datetime.now(pytz.timezone(
+                self.settings["time"]["zone"]))
 
-        os.system(
-            "ffmpeg -y -i {} -f image2 -vframes 1 -pix_fmt yuvj420p -strftime 1 '{}' -loglevel error -stats ".format(self.cam_setting["input_address"], file_path))
+            file_path = "images/" + now.strftime('%Y%m%d-%H%M%S.%f') + ".jpeg"
 
-        return open(file_path, 'rb'),  file_path, now
+            os.system(
+                "ffmpeg -y -i {} -f image2 -vframes 1 -pix_fmt yuvj420p -strftime 1 '{}' -loglevel error -stats ".format(self.settings["input_address"], file_path))
+
+            print(
+                self.settings["id"] + " - success on take pic! {}".format(file_path))
+
+            return open(file_path, 'rb'),  file_path, now
+        except Exception as ex:
+            print(ex)
+            raise ex

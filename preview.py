@@ -5,11 +5,16 @@ import os
 import subprocess
 from os import mkdir, path
 from os.path import isdir
+import shutil
+import json
+
+# tks to, https://github.com/amouchere/growlab-project
 
 
 class Preview:
-    def __init__(self, git_opts):
+    def __init__(self, settings, git_opts):
         self.git_opts = git_opts
+        self.settings = settings
 
     def execute(self, command):
         PIPE = subprocess.PIPE
@@ -45,5 +50,25 @@ class Preview:
             git_dir)
         self.execute(command)
 
+    def move_files(self, pic_file_name):
+        try:
+            dest_path = self.git_opts["git_dir"] + self.git_opts["git_sub_dir"]
+            dest_pic = dest_path + "/photo.jpeg"
+            dest_json = dest_path + "/description.json"
+            dest_index_html = dest_path + "/index.html"
 
-# tks to, https://github.com/amouchere/growlab-project
+            if not isdir(dest_path):
+                os.makedirs(dest_path)
+
+            devices = [item.get("id")for item in self.settings["cameras"]]
+
+            with open(self.git_opts["git_dir"] + "/devices.json", 'w') as outfile:
+                json.dump(devices, outfile)
+
+            shutil.copyfile(pic_file_name, dest_pic)
+            shutil.copyfile(pic_file_name + ".json", dest_json)
+            shutil.copyfile("index.html", dest_index_html)
+
+        except Exception as ex:
+            print(ex)
+            raise ex
