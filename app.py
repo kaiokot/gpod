@@ -3,11 +3,8 @@ from preview import Preview
 import time
 from camera import RtspCam, UsbCam
 from image_processor import AzureComputerVision
-import glob
-import os
 import json
 import sys
-import shutil
 from datetime import datetime
 import pytz
 from threading import Thread
