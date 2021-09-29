@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # fswebcam
 apt-get update
 apt-get -qy install fswebcam
