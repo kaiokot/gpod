@@ -22,8 +22,21 @@ class Bmp280:
     def get_pressure(self):
         return self.bmp280.get_pressure()
 
+    def get_altitude(self):
+        baseline_values = []
+        baseline_size = 100
+
+        for i in range(baseline_size):
+            pressure = self.bmp280.get_pressure()
+            baseline_values.append(pressure)
+
+        baseline = sum(baseline_values[:-25]) / len(baseline_values[:-25])
+
+        return self.bmp280.get_altitude(qnh=baseline)
+
     def get_data(self):
         return {
             "pressure": self.get_pressure(),
-            "temperature": self.get_temperature()
+            "temperature": self.get_temperature(),
+            "altitude": self.get_altitude()
         }
