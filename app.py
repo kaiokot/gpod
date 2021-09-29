@@ -44,6 +44,8 @@ class CameraWorker(Thread):
                     # take and save pic
                     pic_taken_file, pic_file_name, date_pic = cam.take()
 
+                   
+
                     # describe image using azure cognitive services
                     azure_cv = AzureComputerVision(self.settings)
                     az_desc = azure_cv.describe(pic_taken_file)
@@ -89,6 +91,8 @@ def main():
             worker = CameraWorker(settings, cam_setting, queue)
             # worker.daemon = True
             worker.start()
+            time.sleep(3)
+
 
         queue.join()
 

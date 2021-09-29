@@ -5,18 +5,18 @@
     },
     "cameras": [
         {
-            "id": "inside",
+            "id": "usb01",
             "type": "usb",
             "input_address": "/dev/video0",
             "time": {
                 "zone": "America/Sao_Paulo",
                 "interval_seconds": 60,
                 "start": 0,
-                "end": 7
+                "end": 24
             },
             "preview": {
                 "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview",
-                "git_sub_dir": "/devices/inside",
+                "git_sub_dir": "/devices/usb01",
                 "git_path": "git@github.com:kaiokot/gpod-preview.git"
             }
         },
@@ -26,13 +26,45 @@
             "input_address": "rtsp://USER:PASSWORD@192.168.0.29:554/onvif1",
             "time": {
                 "zone": "America/Sao_Paulo",
-                "interval_seconds": 600,
+                "interval_seconds": 60,
                 "start": 0,
-                "end": 7
+                "end": 24
             },
             "preview": {
                 "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview",
                 "git_sub_dir": "/devices/outside",
+                "git_path": "git@github.com:kaiokot/gpod-preview.git"
+            }
+        },
+        {
+            "id": "usb02",
+            "type": "usb",
+            "input_address": "/dev/video2",
+            "time": {
+                "zone": "America/Sao_Paulo",
+                "interval_seconds": 60,
+                "start": 0,
+                "end": 24
+            },
+            "preview": {
+                "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview",
+                "git_sub_dir": "/devices/usb02",
+                "git_path": "git@github.com:kaiokot/gpod-preview.git"
+            }
+        },
+        {
+            "id": "usb03",
+            "type": "usb",
+            "input_address": "/dev/video4",
+            "time": {
+                "zone": "America/Sao_Paulo",
+                "interval_seconds": 60,
+                "start": 0,
+                "end": 24
+            },
+            "preview": {
+                "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview",
+                "git_sub_dir": "/devices/usb03",
                 "git_path": "git@github.com:kaiokot/gpod-preview.git"
             }
         }
