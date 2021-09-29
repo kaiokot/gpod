@@ -24,6 +24,10 @@ Update 2:
 -   :camera_flash: 📸 Add multi camera and config support.
 -   :cloud:  Add preview from multicamera.
 
+Update 3:
+-   🌡️ Add BMP280 Temperature, Pressure, & Altitude Sensor support.
+
+
 
 
 ## References
@@ -35,3 +39,7 @@ Update 2:
 [Github Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)
 
 [ffmpeg](https://ffmpeg.org)
+
+[BMP280 Temperature, Pressure, & Altitude Sensor](https://pypi.org/project/bmp280/)
+
+
