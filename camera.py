@@ -1,6 +1,8 @@
 import os
 from datetime import datetime
 import pytz
+from os import mkdir, path
+from os.path import isdir
 
 # http://manpages.ubuntu.com/manpages/bionic/man1/fswebcam.1.html
 
@@ -16,9 +18,14 @@ class UsbCam():
             now = datetime.now(pytz.timezone(
                 self.settings["time"]["zone"]))
 
-            file_path = "images/" + now.strftime('%Y%m%d-%H%M%S.%f') + ".jpeg"
+            dest_path = path.join("images", self.settings["id"])
+            file_path = path.join(dest_path, "{}.jpeg".format(
+                now.strftime('%Y%m%d-%H%M%S.%f')))
 
-            os.system("fswebcam -d {} -c configs/fswebcam.conf --save {} ".format(
+            if not isdir(dest_path):
+                os.makedirs(dest_path)
+
+            os.system("fswebcam -d {} -c configs/fswebcam.conf --save '{}' ".format(
                 self.settings["input_address"], file_path))
 
             print(
@@ -32,7 +39,6 @@ class UsbCam():
 
 # https://ffmpeg.org/
 
-
 class RtspCam():
     def __init__(self, settings):
         self.settings = settings
@@ -44,7 +50,12 @@ class RtspCam():
             now = datetime.now(pytz.timezone(
                 self.settings["time"]["zone"]))
 
-            file_path = "images/" + now.strftime('%Y%m%d-%H%M%S.%f') + ".jpeg"
+            dest_path = path.join("images", self.settings["id"])
+            file_path = path.join(dest_path, "{}.jpeg".format(
+                now.strftime('%Y%m%d-%H%M%S.%f')))
+
+            if not isdir(dest_path):
+                os.makedirs(dest_path)
 
             os.system(
                 "ffmpeg -y -i {} -f image2 -vframes 1 -pix_fmt yuvj420p -strftime 1 '{}' -loglevel error -stats ".format(self.settings["input_address"], file_path))

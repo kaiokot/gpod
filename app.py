@@ -9,6 +9,7 @@ from datetime import datetime
 import pytz
 from threading import Thread
 
+
 class CameraWorker(Thread):
     def __init__(self, settings, cam_setting, queue):
         Thread.__init__(self)
@@ -44,18 +45,24 @@ class CameraWorker(Thread):
                     # take and save pic
                     pic_taken_file, pic_file_name, date_pic = cam.take()
 
-                   
+                    if(self.settings["azure"]["describe"]):
 
-                    # describe image using azure cognitive services
-                    azure_cv = AzureComputerVision(self.settings)
-                    az_desc = azure_cv.describe(pic_taken_file)
-                    print(self.cam_setting["id"] +
-                          " - success on describe pic!")
+                        #                   describe image using azure cognitive services
+                        azure_cv = AzureComputerVision(self.settings)
+                        az_desc = azure_cv.describe(pic_taken_file)
+                        print(self.cam_setting["id"] +
+                              " - success on describe pic!")
 
-                    # save azure describe into json file
-                    with open(pic_file_name + ".json", 'w') as outfile:
-                        json.dump(
-                            {"desc": az_desc, "dt": str(date_pic)}, outfile)
+                        # save azure describe into json file
+                        with open(pic_file_name + ".json", 'w') as outfile:
+                            json.dump(
+                                {"desc": az_desc, "dt": str(date_pic)}, outfile)
+                    else:
+                        # just save time into json
+                        with open(pic_file_name + ".json", 'w') as outfile:
+                            json.dump(
+                                {"dt": str(date_pic)}, outfile)
+
                     print(
                         self.cam_setting["id"] + " - success on save description json  to pic!")
 
@@ -91,8 +98,7 @@ def main():
             worker = CameraWorker(settings, cam_setting, queue)
             # worker.daemon = True
             worker.start()
-            time.sleep(3)
-
+            time.sleep(5)
 
         queue.join()
 
