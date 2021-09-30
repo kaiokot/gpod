@@ -42,14 +42,17 @@
         fetch("description.json")
             .then(res => res.json())
             .then(result => {
-                document.getElementById("description").innerHTML = result.desc.captions[0][0];
 
-                let new_li = result.desc.tags.map(function (tag) {
-                    return '<li lass=" list-group-item">' + tag + '</li>';
-                }).join('');
+                if (result && result.desc) {
+                    document.getElementById("description").innerHTML = result.desc.captions[0][0];
 
-                document.getElementById("tags").innerHTML = new_li;
+                    let new_li = result.desc.tags.map(function (tag) {
+                        return '<li lass=" list-group-item">' + tag + '</li>';
+                    }).join('');
 
+                    document.getElementById("tags").innerHTML = new_li;
+                }
+                
                 document.getElementById("dt").innerHTML = result.dt;
             });
     </script>
