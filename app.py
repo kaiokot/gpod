@@ -7,8 +7,11 @@ import json
 import sys
 from datetime import datetime
 import pytz
+import threading
 from threading import Thread
 
+threadLock = threading.Lock()
+threads = []
 
 class CameraWorker(Thread):
     def __init__(self, settings, cam_setting, queue):
@@ -20,6 +23,7 @@ class CameraWorker(Thread):
     def run(self):
         try:
             while True:
+                threadLock.acquire()
                 cam = None
                 print("working on {} ......".format(self.cam_setting["id"]))
 
@@ -47,7 +51,7 @@ class CameraWorker(Thread):
 
                     if(self.settings["azure"]["describe"]):
 
-                        #                   describe image using azure cognitive services
+                        # describe image using azure cognitive services
                         azure_cv = AzureComputerVision(self.settings)
                         az_desc = azure_cv.describe(pic_taken_file)
                         print(self.cam_setting["id"] +
@@ -75,11 +79,13 @@ class CameraWorker(Thread):
                         prev.publish()
 
                         print(self.cam_setting["id"] +
-                                " - success on publish preview to github!")
+                              " - success on publish preview to github!")
 
                     print("everything is alright! \n")
                 else:
                     print("out of time range")
+                
+                threadLock.release()
 
                 time.sleep(setting_interval_secs)
         finally:
@@ -101,7 +107,10 @@ def main():
             worker = CameraWorker(settings, cam_setting, queue)
             # worker.daemon = True
             worker.start()
-            time.sleep(5)
+            threads.append(worker)
+
+        for t in threads:
+            t.join()
 
         queue.join()
 
