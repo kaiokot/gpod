@@ -70,9 +70,12 @@ class CameraWorker(Thread):
                     prev = Preview(self.settings, self.cam_setting["preview"])
                     prev.check_directory()
                     prev.move_files(pic_file_name)
-                    prev.publish()
-                    print(self.cam_setting["id"] +
-                          " - success on publish preview to github!")
+
+                    if(self.settings["publish_preview"]):
+                        prev.publish()
+
+                        print(self.cam_setting["id"] +
+                                " - success on publish preview to github!")
 
                     print("everything is alright! \n")
                 else:

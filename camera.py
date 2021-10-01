@@ -22,11 +22,14 @@ class UsbCam():
             file_path = path.join(dest_path, "{}.jpeg".format(
                 now.strftime('%Y%m%d-%H%M%S.%f')))
 
+            resolution = "{}x{}".format(
+                self.settings["width"], self.settings["height"])
+
             if not isdir(dest_path):
                 os.makedirs(dest_path)
 
-            os.system("fswebcam -d {} -c configs/fswebcam.conf --save '{}' ".format(
-                self.settings["input_address"], file_path))
+            os.system("fswebcam -d {} -c configs/fswebcam.conf --resolution '{}' --save '{}' ".format(
+                self.settings["input_address"], resolution, file_path))
 
             print(
                 self.settings["id"] + " - success on take pic! {}".format(file_path))
@@ -38,6 +41,7 @@ class UsbCam():
             raise ex
 
 # https://ffmpeg.org/
+
 
 class RtspCam():
     def __init__(self, settings):
@@ -57,8 +61,11 @@ class RtspCam():
             if not isdir(dest_path):
                 os.makedirs(dest_path)
 
+            resolution = "{}x{}".format(
+                self.settings["width"], self.settings["height"])
+
             os.system(
-                "ffmpeg -y -i {} -f image2 -vframes 1 -pix_fmt yuvj420p -strftime 1 '{}' -loglevel error -stats ".format(self.settings["input_address"], file_path))
+                "ffmpeg -y -i {} -s '{}' -f image2 -vframes 1 -pix_fmt yuvj420p -strftime 1 '{}'  -loglevel error -stats ".format(self.settings["input_address"], resolution, file_path))
 
             print(
                 self.settings["id"] + " - success on take pic! {}".format(file_path))

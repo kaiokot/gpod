@@ -1,4 +1,5 @@
 {
+    "publish_preview": false,
     "azure": {
         "describe": false,
         "subscription_key": "subscription_key",
@@ -9,9 +10,11 @@
             "id": "usb01",
             "type": "usb",
             "input_address": "/dev/video0",
+            "width": 500,
+            "height": 500,
             "time": {
                 "zone": "America/Sao_Paulo",
-                "interval_seconds": 60,
+                "interval_seconds": 600,
                 "start": 0,
                 "end": 24
             },
@@ -25,9 +28,11 @@
             "id": "outside",
             "type": "rtsp",
             "input_address": "rtsp://USER:PASSWORD@192.168.0.29:554/onvif1",
+            "width": 350,
+            "height": 350,
             "time": {
                 "zone": "America/Sao_Paulo",
-                "interval_seconds": 60,
+                "interval_seconds": 600,
                 "start": 0,
                 "end": 24
             },
