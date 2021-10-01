@@ -28,7 +28,7 @@ class UsbCam():
             if not isdir(dest_path):
                 os.makedirs(dest_path)
 
-            os.system("fswebcam -d {} -c configs/fswebcam.conf --resolution '{}' --save '{}' ".format(
+            os.system("fswebcam -d {} --resolution '{}' -c configs/fswebcam.conf --save '{}' ".format(
                 self.settings["input_address"], resolution, file_path))
 
             print(
