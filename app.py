@@ -105,7 +105,7 @@ def main():
 
         for cam_setting in settings["cameras"]:
             worker = CameraWorker(settings, cam_setting, queue)
-            # worker.daemon = True
+            worker.daemon = True
             worker.start()
             threads.append(worker)
 
