@@ -10,8 +10,8 @@
             "id": "usb01",
             "type": "usb",
             "input_address": "/dev/video0",
-            "width": 500,
-            "height": 500,
+            "width": 1088,
+            "height": 815,
             "time": {
                 "zone": "America/Sao_Paulo",
                 "interval_seconds": 600,
@@ -28,8 +28,8 @@
             "id": "outside",
             "type": "rtsp",
             "input_address": "rtsp://USER:PASSWORD@192.168.0.29:554/onvif1",
-            "width": 350,
-            "height": 350,
+            "width": 1088,
+            "height": 815,
             "time": {
                 "zone": "America/Sao_Paulo",
                 "interval_seconds": 600,
