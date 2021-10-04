@@ -33,8 +33,11 @@ class CameraWorker(Thread):
             while True:
                 threadLock.acquire()
                 cam = None
+                
+                logging.info("===============================")
                 logging.info("working on {} ......".format(
                     self.cam_setting["id"]))
+                logging.info("===============================")
 
                 setting_cam_type = self.cam_setting["type"]
                 setting_time_zone = self.cam_setting["time"]["zone"]

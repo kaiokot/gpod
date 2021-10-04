@@ -11,7 +11,7 @@ Restart=always
 RestartSec=1
 StartLimitInterval=0
 WorkingDirectory=/home/pi/tasks/gpod
-ExecStart=python3 /home/pi/tasks/gpod/app.py
+ExecStart=/usr/bin/python3 /home/pi/tasks/gpod/app.py
 
 [Install]
 WantedBy=multi-user.target
