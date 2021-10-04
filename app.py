@@ -33,7 +33,7 @@ class CameraWorker(Thread):
             while True:
                 threadLock.acquire()
                 cam = None
-                
+
                 logging.info("===============================")
                 logging.info("working on {} ......".format(
                     self.cam_setting["id"]))
@@ -100,7 +100,7 @@ class CameraWorker(Thread):
                 threadLock.release()
 
                 time.sleep(setting_interval_secs)
-        
+
         finally:
             self.queue.task_done()
 
@@ -108,7 +108,7 @@ class CameraWorker(Thread):
 def main():
     try:
 
-        logging.basicConfig(filename='gpod.log',
+        logging.basicConfig(filename='logs/gpod.log',
                             level=logging.INFO, format='%(asctime)s %(message)s')
         logging.getLogger("gpod")
 
@@ -121,7 +121,7 @@ def main():
         except Exception as ex:
             logging.error("Error: {}".format(ex))
             sys.exit(1)
-        
+
         queue = Queue()
 
         for cam_setting in settings["cameras"]:
