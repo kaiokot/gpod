@@ -1,3 +1,4 @@
+import logging
 import os
 from datetime import datetime
 import pytz
@@ -13,7 +14,9 @@ class UsbCam():
 
     def take(self):
         try:
-            print("starting to take pic...")
+            logger = logging.getLogger("gpod")
+
+            logger.info("starting to take pic...")
 
             now = datetime.now(pytz.timezone(
                 self.settings["time"]["zone"]))
@@ -31,13 +34,13 @@ class UsbCam():
             os.system("fswebcam -d {} --resolution '{}' -c configs/fswebcam.conf --save '{}' ".format(
                 self.settings["input_address"], resolution, file_path))
 
-            print(
+            logger.info(
                 self.settings["id"] + " - success on take pic! {}".format(file_path))
 
             return open(file_path, 'rb'),  file_path, now
 
         except Exception as ex:
-            print(ex)
+            logging.error("Error: {}".format(ex))
             raise ex
 
 # https://ffmpeg.org/
@@ -49,7 +52,9 @@ class RtspCam():
 
     def take(self):
         try:
-            print("starting to take pic...")
+            logger = logging.getLogger("gpod")
+
+            logger.info("starting to take pic...")
 
             now = datetime.now(pytz.timezone(
                 self.settings["time"]["zone"]))
@@ -67,10 +72,10 @@ class RtspCam():
             os.system(
                 "ffmpeg -y -i {} -s '{}' -f image2 -vframes 1 -pix_fmt yuvj420p -strftime 1 '{}'  -loglevel error -stats ".format(self.settings["input_address"], resolution, file_path))
 
-            print(
+            logger.info(
                 self.settings["id"] + " - success on take pic! {}".format(file_path))
 
             return open(file_path, 'rb'),  file_path, now
         except Exception as ex:
-            print(ex)
+            logging.error("Error: {}".format(ex))
             raise ex

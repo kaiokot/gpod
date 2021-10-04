@@ -1,3 +1,4 @@
+import os
 from queue import Queue
 from preview import Preview
 import time
@@ -29,7 +30,8 @@ class CameraWorker(Thread):
             while True:
                 threadLock.acquire()
                 cam = None
-                logging.info("working on {} ......".format(self.cam_setting["id"]))
+                logging.info("working on {} ......".format(
+                    self.cam_setting["id"]))
 
                 setting_cam_type = self.cam_setting["type"]
                 setting_time_zone = self.cam_setting["time"]["zone"]
@@ -59,7 +61,7 @@ class CameraWorker(Thread):
                         azure_cv = AzureComputerVision(self.settings)
                         az_desc = azure_cv.describe(pic_taken_file)
                         logging.info(self.cam_setting["id"] +
-                              " - success on describe pic!")
+                                     " - success on describe pic!")
 
                         # save azure describe into json file
                         with open(pic_file_name + ".json", 'w') as outfile:
@@ -83,7 +85,7 @@ class CameraWorker(Thread):
                         prev.publish()
 
                         logging.info(self.cam_setting["id"] +
-                              " - success on publish preview to github!")
+                                     " - success on publish preview to github!")
 
                     logging.info("everything is alright! \n")
                 else:
@@ -92,16 +94,19 @@ class CameraWorker(Thread):
                 threadLock.release()
 
                 time.sleep(setting_interval_secs)
+        
         finally:
             self.queue.task_done()
 
 
 def main():
     try:
-        
-        logging.basicConfig(filename='/home/pi/growlab.log',
+
+        logging.basicConfig(filename='gpod.log',
                             level=logging.INFO, format='%(asctime)s %(message)s')
         logging.getLogger("gpod")
+
+        logging.info(os.getcwd())
 
         settings = {}
         try:
@@ -110,6 +115,7 @@ def main():
         except Exception as ex:
             logging.error("Error: {}".format(ex))
             sys.exit(1)
+        
         queue = Queue()
 
         for cam_setting in settings["cameras"]:

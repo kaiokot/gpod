@@ -1,3 +1,4 @@
+import logging
 import os
 from os import mkdir
 from os.path import isdir
@@ -8,7 +9,7 @@ from os.path import isdir
 import shutil
 import json
 
-# tks to, https://github.com/amouchere/growlab-project
+# tks to, https://github.com/amouchere/gpod-project
 
 
 class Preview:
@@ -17,6 +18,7 @@ class Preview:
         self.settings = settings
 
     def execute(self, command):
+        logger = logging.getLogger("gpod")
         PIPE = subprocess.PIPE
 
         try:
@@ -24,12 +26,13 @@ class Preview:
                 command, shell=True, stdout=PIPE, stderr=PIPE)
             stdoutput, stderroutput = process.communicate()
 
-            # print(stdoutput)
-            # print(stderroutput)
-        except subprocess.CalledProcessError as err:
-            print(err)
+            logger.info(stdoutput)
+            logger.error(stderroutput)
+        except subprocess.CalledProcessError as ex:
+            logger.error(ex)
 
     def check_directory(self):
+        logger = logging.getLogger("gpod")
         # Make sure the repo is cloned
         git_dir = self.git_opts["git_dir"]
         git_path = self.git_opts["git_path"]
@@ -40,6 +43,7 @@ class Preview:
             self.execute(command)
 
     def publish(self):
+        logger = logging.getLogger("gpod")
         git_dir = self.git_opts["git_dir"]
 
         command = "cd {} && git pull".format(git_dir)
@@ -48,10 +52,13 @@ class Preview:
         # Commit and push
         command = "cd {} && git add . && git commit -m ':bento: Update preview' && git push -f".format(
             git_dir)
+            
         self.execute(command)
 
     def move_files(self, pic_file_name):
         try:
+            logger = logging.getLogger("gpod")
+
             dest_path = self.git_opts["git_dir"] + self.git_opts["git_sub_dir"]
             dest_pic = dest_path + "/photo.jpeg"
             dest_json = dest_path + "/description.json"
@@ -70,5 +77,5 @@ class Preview:
             shutil.copyfile("index.html", dest_index_html)
 
         except Exception as ex:
-            print(ex)
+            logging.error("Error: {}".format(ex))
             raise ex
