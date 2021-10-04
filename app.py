@@ -1,3 +1,6 @@
+#!/bin/python3
+
+
 import os
 from queue import Queue
 from preview import Preview

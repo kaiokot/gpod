@@ -56,8 +56,9 @@ class Preview:
         self.execute(command)
 
     def move_files(self, pic_file_name):
+        logger = logging.getLogger("gpod")
+        
         try:
-            logger = logging.getLogger("gpod")
 
             dest_path = self.git_opts["git_dir"] + self.git_opts["git_sub_dir"]
             dest_pic = dest_path + "/photo.jpeg"
@@ -77,5 +78,5 @@ class Preview:
             shutil.copyfile("index.html", dest_index_html)
 
         except Exception as ex:
-            logging.error("Error: {}".format(ex))
+            logger.error("Error: {}".format(ex))
             raise ex
