@@ -82,12 +82,13 @@ class CameraWorker(Thread):
                     logging.info(
                         self.cam_setting["id"] + " - success on save description json  to pic!")
 
-                    # send preview
-                    prev = Preview(self.settings, self.cam_setting["preview"])
-                    prev.check_directory()
-                    prev.move_files(pic_file_name)
+                   
 
                     if(self.settings["publish_preview"]):
+                         # send preview
+                        prev = Preview(self.settings, self.cam_setting["preview"])
+                        prev.check_directory()
+                        prev.move_files(pic_file_name)                        
                         prev.publish()
 
                         logging.info(self.cam_setting["id"] +
