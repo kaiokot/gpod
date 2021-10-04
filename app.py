@@ -9,9 +9,13 @@ from datetime import datetime
 import pytz
 import threading
 from threading import Thread
+import json
+import logging
+import sys
 
 threadLock = threading.Lock()
 threads = []
+
 
 class CameraWorker(Thread):
     def __init__(self, settings, cam_setting, queue):
@@ -25,7 +29,7 @@ class CameraWorker(Thread):
             while True:
                 threadLock.acquire()
                 cam = None
-                print("working on {} ......".format(self.cam_setting["id"]))
+                logging.info("working on {} ......".format(self.cam_setting["id"]))
 
                 setting_cam_type = self.cam_setting["type"]
                 setting_time_zone = self.cam_setting["time"]["zone"]
@@ -43,7 +47,7 @@ class CameraWorker(Thread):
                     elif(setting_cam_type == "rtsp"):
                         cam = RtspCam(self.cam_setting)
                     else:
-                        print("invalid cam type...")
+                        logging.info("invalid cam type...")
                         continue
 
                     # take and save pic
@@ -54,7 +58,7 @@ class CameraWorker(Thread):
                         # describe image using azure cognitive services
                         azure_cv = AzureComputerVision(self.settings)
                         az_desc = azure_cv.describe(pic_taken_file)
-                        print(self.cam_setting["id"] +
+                        logging.info(self.cam_setting["id"] +
                               " - success on describe pic!")
 
                         # save azure describe into json file
@@ -67,7 +71,7 @@ class CameraWorker(Thread):
                             json.dump(
                                 {"dt": str(date_pic)}, outfile)
 
-                    print(
+                    logging.info(
                         self.cam_setting["id"] + " - success on save description json  to pic!")
 
                     # send preview
@@ -78,13 +82,13 @@ class CameraWorker(Thread):
                     if(self.settings["publish_preview"]):
                         prev.publish()
 
-                        print(self.cam_setting["id"] +
+                        logging.info(self.cam_setting["id"] +
                               " - success on publish preview to github!")
 
-                    print("everything is alright! \n")
+                    logging.info("everything is alright! \n")
                 else:
-                    print("out of time range")
-                
+                    logging.info("out of time range")
+
                 threadLock.release()
 
                 time.sleep(setting_interval_secs)
@@ -94,12 +98,17 @@ class CameraWorker(Thread):
 
 def main():
     try:
+        
+        logging.basicConfig(filename='/home/pi/growlab.log',
+                            level=logging.INFO, format='%(asctime)s %(message)s')
+        logging.getLogger("gpod")
+
         settings = {}
         try:
             with open("configs/settings.json") as f:
                 settings = json.loads(f.read())
-        except Exception as e:
-            sys.stderr.write("Error: {}".format(e))
+        except Exception as ex:
+            logging.error("Error: {}".format(ex))
             sys.exit(1)
         queue = Queue()
 
@@ -115,7 +124,8 @@ def main():
         queue.join()
 
     except Exception as ex:
-        print(ex)
+        logging.error("Error: {}".format(ex))
+        sys.exit(1)
 
 
 if __name__ == "__main__":
