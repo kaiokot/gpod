@@ -1,0 +1,17 @@
+
+[Unit]
+Description=gpod
+After=ssh-agent.service
+
+[Service]
+User=pi
+Group=pi
+Type=simple
+Restart=always
+RestartSec=1
+StartLimitInterval=0
+WorkingDirectory=/home/pi/tasks/gpod
+ExecStart=/usr/bin/python3 /home/pi/tasks/gpod/app.py
+
+[Install]
+WantedBy=multi-user.target
