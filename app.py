@@ -116,7 +116,7 @@ def main():
 
         settings = {}
         try:
-            with open("configs/settings.json") as f:
+            with open("configs/gpod.json") as f:
                 settings = json.loads(f.read())
         except Exception as ex:
             logging.error("Error: {}".format(ex))
