@@ -13,9 +13,9 @@ class UsbCam():
         self.settings = settings
 
     def take(self):
-        try:
-            logger = logging.getLogger("gpod")
+        logger = logging.getLogger("gpod")
 
+        try:
             logger.info("starting to take pic...")
 
             now = datetime.now(pytz.timezone(
@@ -40,7 +40,7 @@ class UsbCam():
             return open(file_path, 'rb'),  file_path, now
 
         except Exception as ex:
-            logging.error("Error: {}".format(ex))
+            logger.error("Error: {}".format(ex))
             raise ex
 
 # https://ffmpeg.org/
@@ -51,9 +51,9 @@ class RtspCam():
         self.settings = settings
 
     def take(self):
-        try:
-            logger = logging.getLogger("gpod")
+        logger = logging.getLogger("gpod")
 
+        try:
             logger.info("starting to take pic...")
 
             now = datetime.now(pytz.timezone(
@@ -77,5 +77,5 @@ class RtspCam():
 
             return open(file_path, 'rb'),  file_path, now
         except Exception as ex:
-            logging.error("Error: {}".format(ex))
+            logger.error("Error: {}".format(ex))
             raise ex

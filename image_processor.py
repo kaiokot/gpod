@@ -11,9 +11,9 @@ class AzureComputerVision():
         self.setting = setting
 
     def describe(self, image_url):
-        try:
-            logger = logging.getLogger("gpod")
-            
+        logger = logging.getLogger("gpod")
+
+        try:            
             if image_url is None:
                 raise ValueError("image_url")
 
@@ -32,5 +32,5 @@ class AzureComputerVision():
                 "tags": analysis.tags
             }
         except Exception as ex:
-            logging.error("Error: {}".format(ex))
+            logger.error("Error: {}".format(ex))
             raise ex
