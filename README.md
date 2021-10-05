@@ -42,4 +42,4 @@ Update 3:
 
 [BMP280 Temperature, Pressure, & Altitude Sensor](https://pypi.org/project/bmp280/)
 
-[GitHub - Managing deploy keys](https://docs.github.com/pt/developers/overview/managing-deploy-keys) - Tks to [Marcos Khoriati](https://github.com/khoriati) 😄👍
+[GitHub - Managing deploy keys](https://docs.github.com/en/developers/overview/managing-deploy-keys) - Tks to [Marcos Khoriati](https://github.com/khoriati) 😄👍
