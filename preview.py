@@ -52,15 +52,15 @@ class Preview:
         # Commit and push
         command = "cd {} && git add . && git commit -m ':bento: Update preview' && git push -f".format(
             git_dir)
-            
+
         self.execute(command)
 
     def move_files(self, pic_file_name):
         logger = logging.getLogger("gpod")
-        
+
         try:
 
-            dest_path = self.git_opts["git_dir"] + self.git_opts["git_sub_dir"]
+            dest_path = self.git_opts["git_dir"]
             dest_pic = dest_path + "/photo.jpeg"
             dest_json = dest_path + "/description.json"
             dest_index_html = dest_path + "/index.html"

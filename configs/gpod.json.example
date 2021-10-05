@@ -19,8 +19,7 @@
                 "end": 24
             },
             "preview": {
-                "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview",
-                "git_sub_dir": "/devices/usb01",
+                "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview/devices/usb01",
                 "git_path": "git@github.com:kaiokot/gpod-preview.git"
             }
         },
@@ -37,8 +36,7 @@
                 "end": 24
             },
             "preview": {
-                "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview",
-                "git_sub_dir": "/devices/outside",
+                "git_dir": "/home/kot/projects/github-kaiokot/gpod-preview/devices/outside",
                 "git_path": "git@github.com:kaiokot/gpod-preview.git"
             }
         }
