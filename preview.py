@@ -46,9 +46,6 @@ class Preview:
         logger = logging.getLogger("gpod")
         git_dir = self.git_opts["git_dir"]
 
-        command = "ssh -i /home/pi/.ssh/id_ed25519 -o IdentitiesOnly=yes"
-        self.execute(command)
-
         command = "cd {} && git pull".format(git_dir)
         self.execute(command)
 
