@@ -6,7 +6,7 @@ from queue import Queue
 from preview import Preview
 import time
 from camera import RtspCam, UsbCam
-from image_processor import AzureComputerVision
+from image_processor import AzureComputerVision, TimeLapse
 import json
 import sys
 from datetime import datetime
@@ -82,7 +82,8 @@ class CameraWorker(Thread):
                     logging.info(
                         self.cam_setting["id"] + " - success on save description json  to pic!")
 
-                   
+                    # time_lapse = TimeLapse(self.cam_setting)
+                    # time_lapse.create()
 
                     if(self.settings["publish_preview"]):
                          # send preview
