@@ -57,26 +57,29 @@ class TimeLapse():
             images_path = path.join("images", self.settings["id"])
 
             dest_path = path.join(images_path, "timelapse")
-            
+
             dest_file = path.join(dest_path, "{}.mov".format(
                 self.settings["id"]))
+
+            dest_file_sound = path.join(dest_path, "{}.mov".format(
+                self.settings["id"] + "_sound"))
 
             resolution = "{}x{}".format(
                 self.settings["width"], self.settings["height"])
 
             if not isdir(dest_path):
                 os.makedirs(dest_path)
-            
-            # os.system("ffmpeg -y -r 5 -pattern_type glob -i '{}/*.jpeg' -s {} -vcodec libx264 {} -loglevel error".format(
-            #     images_path, resolution, dest_file))
 
             os.system("ffmpeg -y -framerate 5 -pattern_type glob -i '{}/*.jpeg' -s:v {} -c:v prores -profile:v 3 -pix_fmt yuv422p10 {} -loglevel error".format(
                 images_path, resolution, dest_file))
 
+            os.system("ffmpeg -y -i {} -i piano.mp3 -map 0 -map 1:a -c:v copy -shortest {} -loglevel error".format(
+                dest_file, dest_file_sound))
+
             logger.info(
                 self.settings["id"] + " - success on create TimeLapse...! {}".format(dest_file))
 
-            return open(dest_file, 'rb'),  dest_file, now
+            return dest_file_sound, now
 
         except Exception as ex:
             logger.error("Error: {}".format(ex))
