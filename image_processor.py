@@ -57,10 +57,8 @@ class TimeLapse():
             images_path = path.join("images", self.settings["id"])
 
             dest_path = path.join(images_path, "timelapse")
-            dest_file = path.join(dest_path, "{}.mp4".format(
-                self.settings["id"]))
-
-            dest_file_mov = path.join(dest_path, "{}.mov".format(
+            
+            dest_file = path.join(dest_path, "{}.mov".format(
                 self.settings["id"]))
 
             resolution = "{}x{}".format(
@@ -68,13 +66,12 @@ class TimeLapse():
 
             if not isdir(dest_path):
                 os.makedirs(dest_path)
+            
+            # os.system("ffmpeg -y -r 5 -pattern_type glob -i '{}/*.jpeg' -s {} -vcodec libx264 {} -loglevel error".format(
+            #     images_path, resolution, dest_file))
 
-            #two files for tests
-            os.system("ffmpeg -y -r 8 -pattern_type glob -i '{}/*.jpeg' -s {} -vcodec libx264 {} -loglevel error".format(
+            os.system("ffmpeg -y -framerate 5 -pattern_type glob -i '{}/*.jpeg' -s:v {} -c:v prores -profile:v 3 -pix_fmt yuv422p10 {} -loglevel error".format(
                 images_path, resolution, dest_file))
-
-            os.system("ffmpeg -y -framerate 8 -pattern_type glob -i '{}/*.jpeg' -s:v {} -c:v prores -profile:v 3 -pix_fmt yuv422p10 {} -loglevel error".format(
-                images_path, resolution, dest_file_mov))
 
             logger.info(
                 self.settings["id"] + " - success on create TimeLapse...! {}".format(dest_file))
