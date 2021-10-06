@@ -73,11 +73,17 @@ class TimeLapse():
             os.system("ffmpeg -y -framerate 5 -pattern_type glob -i '{}/*.jpeg' -s:v {} -c:v prores -profile:v 3 -pix_fmt yuv422p10 {} -loglevel error".format(
                 images_path, resolution, dest_file))
 
+            logger.info(
+                self.settings["id"] + " - create video TimeLapse...!")
+
             os.system("ffmpeg -y -i {} -i piano.mp3 -map 0 -map 1:a -c:v copy -shortest {} -loglevel error".format(
                 dest_file, dest_file_sound))
 
             logger.info(
-                self.settings["id"] + " - success on create TimeLapse...! {}".format(dest_file))
+                self.settings["id"] + " - create video with sound TimeLapse...!")
+
+            logger.info(
+                self.settings["id"] + " - success on create TimeLapse...! {}".format(dest_file_sound))
 
             return dest_file_sound, now
 
