@@ -86,7 +86,7 @@ class CameraWorker(Thread):
                     # time_lapse.create()
 
                     if(self.settings["publish_preview"]):
-                         # send preview
+                         # send preview to ghpages
                         prev = Preview(self.settings, self.cam_setting["preview"])
                         prev.check_directory()
                         prev.move_files(pic_file_name)                        
