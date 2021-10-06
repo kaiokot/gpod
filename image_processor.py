@@ -76,14 +76,14 @@ class TimeLapse():
             logger.info(
                 self.settings["id"] + " - create video TimeLapse...!")
 
-            os.system("ffmpeg -y -i {} -i piano.mp3 -map 0 -map 1:a -c:v copy -shortest {} -loglevel error".format(
+            os.system("ffmpeg -y -i {} -i piano2.mp3 -map 0 -map 1:a -c:v copy -shortest {} -loglevel error".format(
                 dest_file, dest_file_sound))
 
             logger.info(
-                self.settings["id"] + " - create video with sound TimeLapse...!")
+                self.settings["id"] + " - create video with sound TimeLapse...")
 
             logger.info(
-                self.settings["id"] + " - success on create TimeLapse...! {}".format(dest_file_sound))
+                self.settings["id"] + " - success on create TimeLapse... {}".format(dest_file_sound))
 
             return dest_file_sound, now
 
