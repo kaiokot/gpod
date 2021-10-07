@@ -27,7 +27,8 @@ Update 2:
 Update 3:
 -   🌡️ Add BMP280 Temperature, Pressure, & Altitude Sensor support.
 
-
+Update 4:
+-   🎥 Add TimeLapse feature using ffmpeg.
 
 
 ## References
