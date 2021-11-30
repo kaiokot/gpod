@@ -30,6 +30,8 @@ Update 3:
 Update 4:
 -   🎥 Add TimeLapse feature with music using ffmpeg.
 
+Update 5:
+-   :camera_flash: Add support to DJI Tello camera.
 
 ## References
 
